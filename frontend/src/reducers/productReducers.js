@@ -1,10 +1,13 @@
-import { PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL } from "../constants/productConstants"
+import {
+    PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL,
+    PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL
+} from "../constants/productConstants"
 
 // State for product list
 // Reducer takes initialState and action dispatched to reducer
-export const productListReducer = ( state = { products: [] }, action) => {
+export const productListReducer = (state = { products: [] }, action) => {
     // evaluate object action type
-    switch(action.type) {
+    switch (action.type) {
         // product list request
         case PRODUCT_LIST_REQUEST:  // action
             return { loading: true, products: [] }    // currently fetching - making request
@@ -16,6 +19,21 @@ export const productListReducer = ( state = { products: [] }, action) => {
         // product list fail - error
         case PRODUCT_LIST_FAIL:
             return { loading: false, error: action.payload }    // error in payload
+        default:
+            return state
+    }
+}
+
+// Product Detail
+export const productDetailsReducer = (state = { product: { reviews: [] } }, action) => {
+
+    switch (action.type) {
+        case PRODUCT_DETAILS_REQUEST:
+            return { loading: true, ...state }
+        case PRODUCT_DETAILS_SUCCESS:
+            return { loading: false, product: action.payload }
+        case PRODUCT_DETAILS_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }
