@@ -14,8 +14,6 @@ const OrderScreen = ({ match }) => {
 
     const orderDetails = useSelector((state) => state.orderDetails)
     const { order, loading, error } = orderDetails
-    console.log(orderDetails)
-    console.log(order)
 
     if (!loading) {
         // Funkcia na zarovnanie na 2 desatinne miesta
