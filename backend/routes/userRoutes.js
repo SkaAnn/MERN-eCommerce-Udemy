@@ -1,6 +1,6 @@
 import express from 'express'
 const router = express.Router()
-import { authUser, registerUser, getUserProfile, updateUserProfile } from '../controllers/userControllers.js'
+import { authUser, registerUser, getUserProfile, updateUserProfile } from '../controllers/userController.js'
 import { protect } from '../middleware/authMiddleware.js'
 
 // /api/users je tam kde to volame
