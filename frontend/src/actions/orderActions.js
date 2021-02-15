@@ -72,6 +72,7 @@ export const payOrder = (orderId, paymentResult) => async (dispatch, getState) =
             type: ORDER_PAY_REQUEST,
         })
 
+
         // destructing, miesto bodkovej notacie
         const { userLogin: { userInfo } } = getState()
 
@@ -82,7 +83,7 @@ export const payOrder = (orderId, paymentResult) => async (dispatch, getState) =
             }
         }
 
-        const { data } = await axios.push(`/api/orders/${orderId}/pay`, paymentResult, config)
+        const { data } = await axios.put(`/api/orders/${orderId}/pay`, paymentResult, config)
 
         dispatch({
             type: ORDER_PAY_SUCCESS,
