@@ -148,7 +148,7 @@ const updateUser = asyncHandler(async (req, res) => {
     if (user) {
         user.name = req.body.name || user.name
         user.email = req.body.email || user.email
-        user.isAdmin = req.body.isAdmin || user.isAdmin // bez tej druhej casti to neslo!
+        user.isAdmin = req.body.isAdmin // || user.isAdmin // bez tej druhej casti neslo odkliknut isAdmin
 
         const updatedUser = await user.save()
 
