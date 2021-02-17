@@ -36,7 +36,7 @@ const upload = multer({
 
 // connect to /api/upload
 router.post('/', upload.single('image'), (req, res) =>{ // mozme i multiple
-    res.send(`/${req.file.path}`)
+    res.send(`\\${req.file.path}`)
 } )  
 
 export default router
