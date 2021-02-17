@@ -7,7 +7,9 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { listProducts } from '../actions/productActions'
 
-const HomeScreen = () => {
+const HomeScreen = ({match}) => {
+    const keyword = match.params.keyword
+
     // dispatch
     const dispatch = useDispatch()
 
@@ -19,8 +21,8 @@ const HomeScreen = () => {
     // call listProducts action
     useEffect( () => {
         // FIRE OFF the action
-        dispatch(listProducts())
-    }, [dispatch])
+        dispatch(listProducts(keyword))
+    }, [dispatch, keyword])
 
     return (
         <>
