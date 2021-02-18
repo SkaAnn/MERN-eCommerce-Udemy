@@ -3,7 +3,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import morgan from 'morgan'
-import {notFound, errorHandler} from './middleware/errorMiddleware.js'
+import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 
 import productRoutes from './routes/productRoutes.js'
@@ -17,15 +17,11 @@ connectDB()
 
 const app = express()
 
-if(process.env.NODE_ENV === 'development'){
+if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
 
 app.use(express.json()) // accept json data in body
-
-app.get('/', (req, res) => {
-    res.send('Hello, API is running...')
-})
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
@@ -36,8 +32,20 @@ app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_I
 
 // make static folder /uploads, aby nebol pristupny zvonku
 const __dirname = path.resolve()    //__dirname nemozno pouzivat s Module interpretaciou, iba s ESx
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')))   
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
+// FOR PRODUCTION
+if (process.env.NODE_ENV === 'production') {
+    // make frontend/build as static folder
+    app.use(express.static(path.join(__dirname, '/frontend/build')))
+    // any route thats not api
+    app.get('*', (req, res) =>
+        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html')))
+} else {
+    app.get('/', (req, res) => {
+        res.send('API is running...')
+    })
+}
 
 // Not routing sites
 app.use(notFound)
